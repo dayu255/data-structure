@@ -11,23 +11,23 @@ type LinkedList[T any] interface {
 
 type Node[T any] struct {
 	value T
-	next *Node[T]
+	next  *Node[T]
 }
 
 type HeadLinkedList[T any] struct {
 	head *Node[T]
 }
 
-func NewLinkedList[T any] () LinkedList[T]{
+func NewLinkedList[T any]() LinkedList[T] {
 	return &HeadLinkedList[T]{
 		head: nil,
 	}
 }
 
 func (h *HeadLinkedList[T]) Add(v T) {
-	newNode := &Node[T] {
+	newNode := &Node[T]{
 		value: v,
-		next: nil,
+		next:  nil,
 	}
 
 	if h.head == nil {
@@ -59,7 +59,7 @@ func (h *HeadLinkedList[T]) Delete(n int) {
 	for i := 0; i < n; i++ {
 		former = pos
 		pos = pos.next
-		if(pos == nil) {
+		if pos == nil {
 			panic("Index out of range.")
 		}
 	}
@@ -75,11 +75,11 @@ func (h *HeadLinkedList[T]) At(n int) T {
 	pos := h.head
 	for i := 0; i < n; i++ {
 		pos = pos.next
-		if(pos == nil) {
+		if pos == nil {
 			panic("Index out of range.")
 		}
 	}
-	
+
 	return pos.value
 }
 
@@ -104,9 +104,9 @@ func (h *HeadLinkedList[T]) Insert(n int, v T) {
 
 	newNode := &Node[T]{
 		value: v,
-		next: nil,
+		next:  nil,
 	}
-	
+
 	if n == 0 {
 		newNode.next = h.head
 		h.head = newNode
@@ -114,7 +114,7 @@ func (h *HeadLinkedList[T]) Insert(n int, v T) {
 	}
 
 	pos := h.head
-	for i := 0; i < n - 1; i++ {
+	for i := 0; i < n-1; i++ {
 		pos = pos.next
 		if pos.next == nil {
 			panic("Index out of range.")

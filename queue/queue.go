@@ -31,7 +31,7 @@ func (q *sliceQueue[T]) Pop() {
 }
 
 func (q *sliceQueue[T]) Empty() bool {
-	return q.l.Empty();
+	return q.l.Empty()
 }
 
 func (q *sliceQueue[T]) Len() int {

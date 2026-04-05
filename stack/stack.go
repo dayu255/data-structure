@@ -1,8 +1,8 @@
 package stack
 
 import (
-	"github.com/dayu255/data-structure/linkedList"
 	"errors"
+	"github.com/dayu255/data-structure/linkedList"
 )
 
 type Stack[T any] interface {
