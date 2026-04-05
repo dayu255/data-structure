@@ -1,6 +1,9 @@
 package stack
 
-import "errors"
+import (
+	"github.com/dayu255/data-structure/linkedList"
+	"errors"
+)
 
 type Stack[T any] interface {
 	Push(v T)
@@ -10,40 +13,39 @@ type Stack[T any] interface {
 	Top() (T, error)
 }
 
-type sliceStack[T any] struct {
-	items []T
+type linkedStack[T any] struct {
+	l linkedlist.LinkedList[T]
 }
 
 func NewStack[T any]() Stack[T] {
-	return &sliceStack[T]{
-		items: make([]T, 0),
+	return &linkedStack[T]{
+		l: linkedlist.NewLinkedList[T](),
 	}
 }
 
-func (s *sliceStack[T]) Push(v T) {
-	s.items = append(s.items, v)
+func (s *linkedStack[T]) Push(v T) {
+	s.l.Insert(0, v)
 }
 
-func (s *sliceStack[T]) Pop() {
+func (s *linkedStack[T]) Pop() {
 	if s.Empty() {
 		return
 	}
-	s.items = s.items[:len(s.items) - 1]
+	s.l.Delete(0)
 }
 
-func (s *sliceStack[T]) Empty() bool {
-	return len(s.items) == 0
+func (s *linkedStack[T]) Empty() bool {
+	return s.l.Empty()
 }
 
-func (s *sliceStack[T]) Len() int {
-	return len(s.items)
+func (s *linkedStack[T]) Len() int {
+	return s.l.Len()
 }
 
-func (s *sliceStack[T]) Top() (T, error) {
-	if len(s.items) == 0 {
+func (s *linkedStack[T]) Top() (T, error) {
+	if s.Empty() {
 		var zero T
-		return zero, errors.New("Stack is empty")
+		return zero, errors.New("Stack is empty.")
 	}
-
-	return s.items[len(s.items)-1], nil
+	return s.l.At(0), nil
 }
