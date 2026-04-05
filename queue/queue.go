@@ -1,6 +1,8 @@
 package queue
 
-import "errors"
+import (
+	"github.com/dayu255/data-structure/linkedList"
+)
 
 type Queue[T any] interface {
 	Push(v T)
@@ -11,38 +13,31 @@ type Queue[T any] interface {
 }
 
 type sliceQueue[T any] struct {
-	items []T
+	l linkedlist.LinkedList[T]
 }
 
 func NewQueue[T any]() Queue[T] {
 	return &sliceQueue[T]{
-		items: make([]T, 0),
+		linkedlist.NewLinkedList[T](),
 	}
 }
 
-func (q *sliceQueue[T]) Push(v T) {
-	q.items = append(q.items, v)
+func (q sliceQueue[T]) Push(v T) {
+	q.l.Add(v)
 }
 
 func (q *sliceQueue[T]) Pop() {
-	if len(q.items) == 0 {
-		return
-	}
-	q.items = q.items[1:]
+	q.l.Delete(0)
 }
 
 func (q *sliceQueue[T]) Empty() bool {
-	return len(q.items) == 0
+	return q.l.Empty();
 }
 
 func (q *sliceQueue[T]) Len() int {
-	return len(q.items)
+	return q.l.Len()
 }
 
 func (q *sliceQueue[T]) Front() (T, error) {
-	if len(q.items) == 0 {
-		var zero T
-		return zero, errors.New("Queue is empty.")
-	}
-	return q.items[0], nil
+	return q.l.At(0), nil
 }
