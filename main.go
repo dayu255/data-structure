@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/dayu255/data-structure/list"
+	"github.com/dayu255/data-structure/stack"
 	"fmt"
 )
 
