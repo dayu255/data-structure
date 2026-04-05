@@ -4,6 +4,9 @@ type LinkedList[T any] interface {
 	Add(v T)
 	Delete(i int)
 	At(i int) T
+	Empty() bool
+	Len() int
+	Insert(i int, v T)
 }
 
 type Node[T any] struct {
@@ -78,4 +81,46 @@ func (h *HeadLinkedList[T]) At(n int) T {
 	}
 	
 	return pos.value
+}
+
+func (h *HeadLinkedList[T]) Empty() bool {
+	return h.head == nil
+}
+
+func (h *HeadLinkedList[T]) Len() int {
+	var n int
+	pos := h.head
+	for pos != nil {
+		pos = pos.next
+		n++
+	}
+	return n
+}
+
+func (h *HeadLinkedList[T]) Insert(n int, v T) {
+	if n < 0 || (h.head == nil && n != 0) {
+		panic("Index out of range.")
+	}
+
+	newNode := &Node[T]{
+		value: v,
+		next: nil,
+	}
+	
+	if n == 0 {
+		newNode.next = h.head
+		h.head = newNode
+		return
+	}
+
+	pos := h.head
+	for i := 0; i < n - 1; i++ {
+		pos = pos.next
+		if pos.next == nil {
+			panic("Index out of range.")
+		}
+	}
+
+	newNode.next = pos.next
+	pos.next = newNode
 }
